@@ -48,7 +48,6 @@
 
 <h1>1.&nbsp;&nbsp;Temat projektu</h1>
 <p>Tematem projektu jest system rejestracji czasu pracy. Jest to aplikacja internetowa, w której pracownicy zapisują, kiedy zaczęli i skończyli pracę oraz kiedy mieli przerwę. System sam liczy przepracowane godziny i nadgodziny. Kierownik widzi czas pracy swojego działu i może przygotować raport za cały miesiąc.</p>
-<p>Część serwerowa zostanie napisana w języku Java z użyciem Spring Boot, a strona dla użytkowników w React. Dane będą zapisywane w bazie PostgreSQL.</p>
 
 <h1>2.&nbsp;&nbsp;Cel i zakres systemu</h1>
 <p>Celem systemu jest zastąpienie papierowych list obecności i arkuszy w Excelu jedną aplikacją. Pracownik zapisuje czas pracy jednym kliknięciem, a firma ma dokładne dane o przepracowanych godzinach bez ręcznego liczenia.</p>
@@ -64,19 +63,41 @@
 </ul>
 <p>System nie liczy wynagrodzeń i nie obsługuje czytników kart.</p>
 
-<h1>3.&nbsp;&nbsp;Aktorzy systemu</h1>
+<h1>3.&nbsp;&nbsp;Założenia projektowe i technologie</h1>
+<p>Przyjęto następujące założenia:</p>
+<ul>
+  <li>system jest aplikacją internetową działającą w przeglądarce,</li>
+  <li>strona dla użytkowników komunikuje się z serwerem przez REST API,</li>
+  <li>cała logika systemu i sprawdzanie uprawnień odbywają się na serwerze,</li>
+  <li>serwer ma budowę warstwową: kontrolery, serwisy i repozytoria,</li>
+  <li>godzinę rozpoczęcia i zakończenia pracy zapisuje serwer, a nie urządzenie pracownika.</li>
+</ul>
+<p>Do wykonania systemu zostaną użyte:</p>
+<ul>
+  <li>Java 21 i Spring Boot 3 po stronie serwera,</li>
+  <li>React i TypeScript po stronie przeglądarki,</li>
+  <li>baza danych PostgreSQL,</li>
+  <li>Spring Security i tokeny JWT do logowania,</li>
+  <li>Docker Compose do uruchamiania systemu,</li>
+  <li>Git i GitHub do wspólnej pracy nad kodem,</li>
+  <li>IntelliJ IDEA i Visual Studio Code jako środowiska programistyczne.</li>
+</ul>
+
+<h1>4.&nbsp;&nbsp;Aktorzy systemu</h1>
 <p><b>Pracownik</b> to podstawowy użytkownik systemu. Zapisuje swój czas pracy, przegląda swoje godziny i składa wnioski o urlop.</p>
 <p><b>Kierownik</b> może robić to samo co pracownik, bo sam też zapisuje swój czas pracy. Dlatego na diagramie przypadków użycia dziedziczy po pracowniku. Dodatkowo widzi czas pracy pracowników ze swojego działu, rozpatruje ich wnioski urlopowe i generuje raport miesięczny.</p>
 <p><b>Administrator</b> zakłada konta użytkowników, nadaje im role i tworzy działy. Może też poprawić wpis czasu pracy, na przykład gdy pracownik zapomniał zakończyć pracę.</p>
 
 <div class="rys">
-  <h1>4.&nbsp;&nbsp;Diagram przypadków użycia</h1>
+  <h1>5.&nbsp;&nbsp;Diagram przypadków użycia</h1>
   <img src="diagrams/use_case.svg" alt="Diagram przypadków użycia">
   <div class="podpis">Rysunek 1. Diagram przypadków użycia</div>
 </div>
 
 <div class="po-rys">
-<h1>5.&nbsp;&nbsp;Wymagania funkcjonalne</h1>
+<p>Diagram przypadków użycia pokazuje, co każdy aktor może zrobić w systemie. Pracownik i administrator najpierw logują się do systemu (UC01). Pracownik rozpoczyna i kończy pracę, robi przerwy, przegląda swój czas pracy i składa wnioski o urlop (UC02 do UC06). Kierownik dziedziczy po pracowniku, więc ma te same możliwości. Dodatkowo przegląda czas pracy swojego działu, rozpatruje wnioski urlopowe i generuje raport miesięczny (UC07 do UC09). Administrator zarządza kontami i działami oraz poprawia błędne wpisy czasu pracy (UC10 do UC12).</p>
+
+<h1>6.&nbsp;&nbsp;Wymagania funkcjonalne</h1>
 <ul>
   <li>Użytkownik loguje się do systemu adresem e-mail i hasłem.</li>
   <li>Pracownik może rozpocząć pracę, rozpocząć i zakończyć przerwę oraz zakończyć pracę.</li>
@@ -91,7 +112,7 @@
   <li>Administrator może poprawić błędny wpis czasu pracy albo dodać brakujący.</li>
 </ul>
 
-<h1>6.&nbsp;&nbsp;Wymagania niefunkcjonalne</h1>
+<h1>7.&nbsp;&nbsp;Wymagania niefunkcjonalne</h1>
 <ul>
   <li>Zapisanie rozpoczęcia lub zakończenia pracy trwa krócej niż pół sekundy.</li>
   <li>Godzinę rozpoczęcia i zakończenia pracy zapisuje serwer, więc pracownik nie może jej zmienić, przestawiając zegar w swoim komputerze.</li>
@@ -104,7 +125,7 @@
 </div>
 
 <div class="rys">
-  <h1>7.&nbsp;&nbsp;Wstępny diagram klas</h1>
+  <h1>8.&nbsp;&nbsp;Wstępny diagram klas</h1>
   <img src="diagrams/class.svg" alt="Wstępny diagram klas">
   <div class="podpis">Rysunek 2. Wstępny diagram klas</div>
 </div>
@@ -112,7 +133,7 @@
 <div class="po-rys">
 <p>Główną klasą jest <i>Uzytkownik</i>. Każdy użytkownik ma rolę i należy do jednego działu, a każdy dział ma jednego kierownika. Pracownik zapisuje sesje pracy, a każda sesja może mieć kilka przerw. Przerwa nie istnieje bez sesji, dlatego te klasy połączono kompozycją. Wniosek urlopowy składa pracownik, a rozpatruje go kierownik działu. Nadgodziny są liczone z sesji pracy na podstawie dziennej normy pracownika.</p>
 
-<h1>8.&nbsp;&nbsp;Repozytorium projektu</h1>
+<h1>9.&nbsp;&nbsp;Repozytorium projektu</h1>
 <p>Kod projektu znajduje się we wspólnym repozytorium Git pod adresem <a href="https://github.com/DudekSzymon/MASI-Projekt">https://github.com/DudekSzymon/MASI-Projekt</a>. Każdy członek zespołu zapisuje zmiany ze swojego konta. Podział prac w zespole:</p>
 <ul>
   <li>Szymon Dudek odpowiada za backend, czyli zapisywanie czasu pracy, liczenie nadgodzin i raporty.</li>

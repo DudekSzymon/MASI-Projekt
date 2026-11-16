@@ -11,7 +11,10 @@ $edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
 if (-not (Test-Path $edge)) { $edge = "C:\Program Files\Google\Chrome\Application\chrome.exe" }
 $profile = Join-Path $env:TEMP "km1-pdf-profile"
 
-if (Test-Path $pdf) { Remove-Item $pdf }
+if (Test-Path $pdf) {
+    try { Remove-Item $pdf -ErrorAction Stop }
+    catch { throw "Plik $pdf jest otwarty w innym programie. Zamknij go i uruchom skrypt ponownie." }
+}
 $url = "file:///" + $html.Replace('\', '/')
 $args = @("--headless=new", "--disable-gpu", "--no-pdf-header-footer", "--user-data-dir=`"$profile`"",
           "--print-to-pdf=`"$pdf`"", "`"$url`"")

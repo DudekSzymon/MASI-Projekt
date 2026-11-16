@@ -38,4 +38,5 @@ Skrypt generuje diagramy SVG z `docs/km1/diagrams/generate.py` i drukuje `docs/k
 ## Zespół
 
 - Szymon Dudek
-- *[Imię Nazwisko]*
+- Bartosz Fijołek
+- Bartłomiej Łukasiewicz

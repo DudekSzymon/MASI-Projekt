@@ -1,0 +1,29 @@
+# --- Java / Maven (backend) ---
+target/
+*.class
+*.log
+hs_err_pid*
+
+# --- Node / Vite (frontend) ---
+node_modules/
+dist/
+.vite/
+coverage/
+
+# --- Srodowisko ---
+.env
+.env.*
+!.env.example
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.claude/settings.local.json
+
+# --- System ---
+.DS_Store
+Thumbs.db
+
+# --- Materialy prowadzacego (nie wersjonujemy) ---
+Masi_Projekt_Harmonogram_Zasady_Zaliczenia.pdf

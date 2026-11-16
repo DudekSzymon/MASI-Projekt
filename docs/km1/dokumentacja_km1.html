@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>KM1 – System rejestracji czasu pracy</title>
+<style>
+  @page { size: A4; margin: 25mm 25mm 25mm 25mm; }
+  @page landscape { size: A4 landscape; margin: 15mm 18mm 15mm 18mm; }
+
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; background: #fff; margin: 0; }
+
+  /* naglowek uczelni */
+  .uczelnia { font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-align: center; font-size: 16pt; letter-spacing: 5pt; margin: 0; }
+  .wydzial { font-family: "Arial Narrow", Arial, Helvetica, sans-serif; font-weight: bold; text-align: center; font-size: 14pt; margin: 4pt 0 6pt; }
+  .kreska { border: none; border-top: 2pt solid #000; margin: 0 0 22pt; }
+  table.metryka { width: 100%; border-collapse: collapse; font-size: 10.5pt; line-height: 1.3; margin-bottom: 18pt; }
+  table.metryka td { border: 0.75pt solid #000; text-align: center; padding: 6pt; }
+
+  /* rozdzialy */
+  h1 { font-size: 12pt; font-weight: bold; margin: 10pt 0 2pt; padding-left: 1.1cm; text-indent: -0.6cm; break-after: avoid; }
+  h2 { font-size: 12pt; font-weight: bold; margin: 6pt 0 2pt; padding-left: 1.1cm; break-after: avoid; }
+  p { margin: 0 0 0 1.1cm; text-align: justify; text-indent: 1.25cm; }
+  p.ni { text-indent: 0; }
+  ol, ul { margin: 0 0 0 1.1cm; padding-left: 0.9cm; text-align: justify; }
+  li { margin: 0; }
+
+  /* tabele w stylu sprawozdania */
+  table.t { width: 100%; border-collapse: collapse; font-size: 11pt; line-height: 1.3; margin: 6pt 0 0; }
+  table.t th, table.t td { border: 0.75pt solid #000; padding: 2pt 5pt; vertical-align: top; text-align: left; }
+  table.t th { text-align: center; font-weight: bold; }
+  table.t td.b { font-weight: bold; }
+  table.t td.c { text-align: center; }
+  table.t td.grupa { font-weight: bold; text-align: center; font-style: italic; }
+  table.t tr { break-inside: avoid; }
+  table.t thead { display: table-header-group; break-after: avoid; }
+  .podpis { text-align: center; font-style: italic; font-size: 12pt; margin: 2pt 0 10pt; text-indent: 0; }
+  table.uc { margin-top: 4pt; }
+  table.uc th { text-align: left; width: 24%; }
+  table.uc ol { margin: 0; padding-left: 14pt; }
+
+  code { font-family: "Courier New", monospace; font-size: 10.5pt; }
+  .todo { background: #fff2a8; }
+
+  /* strony z diagramami */
+  .rys { page: landscape; break-before: page; text-align: center; line-height: 1.2; }
+  .rys h1 { margin: 0 0 4pt; }
+  .rys img { display: block; margin: 0 auto; max-width: 100%; max-height: 150mm; }
+  .rys .podpis { margin: 4pt 0 0; break-before: avoid; }
+  .po-rys { break-before: page; }
+</style>
+</head>
+<body>
+
+<div class="uczelnia">POLITECHNIKA ŚWIĘTOKRZYSKA</div>
+<div class="wydzial">Wydział Elektrotechniki, Automatyki i Informatyki</div>
+<hr class="kreska">
+
+<table class="metryka">
+  <tr><td colspan="2"><b>Politechnika Świętokrzyska</b></td></tr>
+  <tr><td colspan="2"><b>Studia niestacjonarne (semestr zimowy)</b></td></tr>
+  <tr><td style="width:50%"><b>Modelowanie i analiza systemów informatycznych – Projekt</b></td><td><b>2026/2027</b></td></tr>
+  <tr><td colspan="2"><b>Kamień milowy 1 – Analiza i projekt systemu</b><br>Temat: System rejestracji czasu pracy</td></tr>
+  <tr><td><b>Imię i nazwisko:</b><br>Szymon Dudek<br><span class="todo">[Imię Nazwisko]</span></td><td><b>Grupa:</b><br>1IZ22B</td></tr>
+  <tr><td colspan="2"><b>Dzień oddania:</b> <span class="todo">[dd.mm.2026]</span></td></tr>
+</table>
+
+<!-- ============================================================ 1 -->
+<h1>1.&nbsp;&nbsp;Temat projektu</h1>
+<p>Tematem projektu jest <b>system rejestracji czasu pracy</b>, czyli aplikacja internetowa, w której pracownicy firmy rejestrują rozpoczęcie i zakończenie pracy oraz przerwy. Na tej podstawie system prowadzi elektroniczną ewidencję czasu pracy, sam wylicza czas przepracowany i nadgodziny oraz obsługuje wnioski o poprawienie wpisu i o nieobecność.</p>
+<p>W wielu małych i średnich firmach czas pracy zapisuje się dziś na papierowych listach obecności albo w Excelu. Łatwo tam o pomyłkę lub dopisanie godzin „na oko”, nie widać, kto i kiedy coś zmienił, a przygotowanie miesięcznego zestawienia dla kadr wymaga ręcznego liczenia. Projektowany system zastępuje te rozwiązania jednym, wiarygodnym źródłem danych o czasie pracy.</p>
+
+<!-- ============================================================ 2 -->
+<h1>2.&nbsp;&nbsp;Cel realizacji systemu</h1>
+<p>Głównym celem jest dostarczenie firmie prostego narzędzia, które pozwala rzetelnie rejestrować czas pracy pracowników i rozliczać go co miesiąc. Cele szczegółowe są następujące:</p>
+<ol>
+  <li><b>Szybka rejestracja</b> – pracownik rozpoczyna i kończy pracę jednym kliknięciem, a godzinę zdarzenia zapisuje serwer, a nie telefon czy komputer pracownika.</li>
+  <li><b>Przejrzystość dla pracownika</b> – każdy widzi swoją ewidencję, sumy dzienne i miesięczne oraz nadgodziny.</li>
+  <li><b>Kontrola dla kierownika</b> – kierownik widzi czas pracy swojego zespołu, rozpatruje wnioski i generuje raport miesięczny.</li>
+  <li><b>Wiarygodność danych</b> – każda zmiana wpisu musi mieć uzasadnienie i trafia do dziennika zdarzeń, a zamknięty miesiąc nie może być już zmieniany.</li>
+  <li><b>Automatyzacja</b> – system sam liczy czas pracy i nadgodziny oraz wychwytuje sesje, których pracownik zapomniał zakończyć.</li>
+</ol>
+
+<!-- ============================================================ 3 -->
+<h1>3.&nbsp;&nbsp;Zakres systemu</h1>
+<p>System składa się z sześciu obszarów funkcjonalnych, które przedstawia tabela 1.</p>
+<table class="t">
+  <thead><tr><th style="width:30%">Obszar</th><th>Zakres</th></tr></thead>
+  <tr><td class="b">Logowanie i konta</td><td>Logowanie, role (pracownik, kierownik, administrator), zakładanie, edycja i dezaktywacja kont, przypisanie pracownika do działu i harmonogramu pracy.</td></tr>
+  <tr><td class="b">Rejestracja czasu pracy</td><td>Rozpoczęcie pracy, przerwy, zakończenie pracy, bieżący status pracownika, automatyczne zamykanie niezakończonych sesji.</td></tr>
+  <tr><td class="b">Ewidencja</td><td>Podgląd wpisów z podziałem na dni i miesiące, sumy czasu pracy, liczenie nadgodzin według harmonogramu.</td></tr>
+  <tr><td class="b">Wnioski</td><td>Wnioski o poprawienie wpisu (np. gdy pracownik zapomni się „odbić”) i o nieobecność (urlop, zwolnienie lekarskie) oraz ich rozpatrywanie przez kierownika.</td></tr>
+  <tr><td class="b">Raporty</td><td>Miesięczny raport czasu pracy pracownika i działu, eksport do CSV i PDF, zamykanie okresu rozliczeniowego.</td></tr>
+  <tr><td class="b">Administracja i audyt</td><td>Działy, harmonogramy (normy czasu pracy), ręczne poprawianie wpisów, dziennik zdarzeń.</td></tr>
+</table>
+<div class="podpis">Tabela 1. Zakres systemu</div>
+<p>Aby zakres projektu był realny, system <b>nie obejmuje</b>: naliczania wynagrodzeń i list płac (raport CSV można zaimportować do programu kadrowo-płacowego), czytników kart RFID i biometrii, śledzenia lokalizacji pracownika, układania grafików zmianowych ani osobnej aplikacji mobilnej. Strona działa jednak w przeglądarce telefonu.</p>
+<p>Najważniejsze pojęcia używane w dalszej części dokumentacji wyjaśnia tabela 2.</p>
+<table class="t">
+  <thead><tr><th style="width:30%">Pojęcie</th><th>Znaczenie</th></tr></thead>
+  <tr><td class="b">Sesja pracy</td><td>Okres od kliknięcia „Rozpocznij pracę” do kliknięcia „Zakończ pracę”. W ciągu dnia może być kilka sesji.</td></tr>
+  <tr><td class="b">Przerwa</td><td>Czas w trakcie sesji, w którym pracownik nie pracuje. Jest odejmowany od czasu sesji.</td></tr>
+  <tr><td class="b">Czas netto</td><td>Czas trwania sesji po odjęciu przerw.</td></tr>
+  <tr><td class="b">Harmonogram pracy</td><td>Normy obowiązujące pracownika: ile godzin dziennie i tygodniowo ma pracować i w które dni.</td></tr>
+  <tr><td class="b">Nadgodziny</td><td>Czas pracy powyżej dziennej normy z harmonogramu pracownika.</td></tr>
+  <tr><td class="b">Okres rozliczeniowy</td><td>Miesiąc, za który rozliczany jest czas pracy. Po zamknięciu wpisów z tego miesiąca nie można zmieniać.</td></tr>
+  <tr><td class="b">Korekta</td><td>Poprawienie istniejącego wpisu lub dodanie brakującego, zawsze z uzasadnieniem.</td></tr>
+  <tr><td class="b">Dziennik zdarzeń</td><td>Rejestr wszystkich zmian w danych o czasie pracy: kto, kiedy, co zmienił, stan przed zmianą i po niej. Wpisów w nim nie można edytować.</td></tr>
+</table>
+<div class="podpis">Tabela 2. Słownik pojęć</div>
+
+<!-- ============================================================ 4 -->
+<h1>4.&nbsp;&nbsp;Założenia projektowe i zastosowane technologie</h1>
+<p>System będzie aplikacją internetową złożoną z dwóch części: strony dla użytkowników (frontend) oraz serwera z logiką i bazą danych (backend). Obie części komunikują się przez REST API, a cała logika biznesowa znajduje się na serwerze. Najważniejsze założenia projektowe:</p>
+<ul>
+  <li>backend ma budowę warstwową: kontrolery REST, serwisy z logiką biznesową, repozytoria z dostępem do bazy danych,</li>
+  <li>użytkownik loguje się raz i dostaje token JWT, a uprawnienia każdej roli są sprawdzane na serwerze,</li>
+  <li>godzinę rozpoczęcia i zakończenia pracy zapisuje serwer, więc pracownik nie może jej zmienić, przestawiając zegar w swoim urządzeniu,</li>
+  <li>daty zapisywane są w czasie UTC, a wyświetlane w czasie polskim, dzięki czemu zmiana czasu z letniego na zimowy nie psuje wyliczeń,</li>
+  <li>danych o czasie pracy się nie usuwa: zmiany wprowadza się korektami zapisywanymi w dzienniku zdarzeń, a konta pracowników są dezaktywowane, a nie kasowane,</li>
+  <li>wymagania oznaczone jako MVP zostaną wykonane w kamieniu milowym 2, a pozostałe w kamieniu milowym 3.</li>
+</ul>
+<p>Działanie systemu opiera się na regułach biznesowych przedstawionych w tabeli 3.</p>
+<table class="t">
+  <thead><tr><th style="width:13%">ID</th><th>Reguła</th></tr></thead>
+  <tr><td class="b">RB-01</td><td>Pracownik może mieć w danej chwili najwyżej jedną otwartą sesję pracy i jedną otwartą przerwę.</td></tr>
+  <tr><td class="b">RB-02</td><td>Przerwę można rozpocząć tylko w trakcie sesji. Zakończenie sesji kończy też trwającą przerwę.</td></tr>
+  <tr><td class="b">RB-03</td><td>Nadgodziny w danym dniu to czas netto pomniejszony o dzienną normę (jeżeli wynik jest dodatni). Praca w dniu wolnym w całości liczy się jako nadgodziny.</td></tr>
+  <tr><td class="b">RB-04</td><td>Sesja niezakończona do 23:59 jest zamykana automatycznie i oznaczana jako wymagająca sprawdzenia.</td></tr>
+  <tr><td class="b">RB-05</td><td>Kierownik widzi i rozpatruje tylko dane pracowników swojego działu. Nie może rozpatrywać własnych wniosków.</td></tr>
+  <tr><td class="b">RB-06</td><td>Wpisów z zamkniętego okresu rozliczeniowego nie można zmieniać ani składać do nich wniosków o korektę.</td></tr>
+  <tr><td class="b">RB-07</td><td>Każda ręczna zmiana wpisu wymaga uzasadnienia i trafia do dziennika zdarzeń.</td></tr>
+  <tr><td class="b">RB-08</td><td>Wnioski o nieobecność tego samego pracownika nie mogą nachodzić na siebie terminami.</td></tr>
+</table>
+<div class="podpis">Tabela 3. Reguły biznesowe</div>
+<p>Wybrane technologie i narzędzia przedstawia tabela 4.</p>
+<table class="t">
+  <thead><tr><th style="width:26%">Element</th><th style="width:36%">Technologia</th><th>Do czego służy</th></tr></thead>
+  <tr><td class="b">Backend</td><td>Java 21, Spring Boot 3 (Web, Data JPA, Security, Validation)</td><td>Logika biznesowa, REST API, bezpieczeństwo i walidacja danych.</td></tr>
+  <tr><td class="b">Frontend</td><td>React 18, TypeScript, Vite, React Router</td><td>Strona działająca w przeglądarce na komputerze i telefonie.</td></tr>
+  <tr><td class="b">Baza danych</td><td>PostgreSQL 16, migracje Flyway</td><td>Przechowywanie danych. Reguła RB-01 jest dodatkowo pilnowana przez unikalny indeks w bazie.</td></tr>
+  <tr><td class="b">Bezpieczeństwo</td><td>Spring Security, JWT, BCrypt</td><td>Logowanie, uprawnienia ról, bezpieczne zapisywanie haseł.</td></tr>
+  <tr><td class="b">Dokumentacja API</td><td>springdoc-openapi (Swagger UI)</td><td>Automatycznie generowany opis wszystkich endpointów.</td></tr>
+  <tr><td class="b">Testy</td><td>JUnit 5, Mockito, JaCoCo, Vitest</td><td>Testy logiki biznesowej i pomiar pokrycia kodu testami.</td></tr>
+  <tr><td class="b">Uruchamianie</td><td>Maven, npm, Docker Compose</td><td>Uruchomienie całego systemu jednym poleceniem.</td></tr>
+  <tr><td class="b">Kontrola wersji</td><td>Git, GitHub</td><td>Wspólne repozytorium zespołu, historia zmian i wkładu każdej osoby.</td></tr>
+  <tr><td class="b">Metryki kodu (KM3)</td><td>SonarQube, JaCoCo, IntelliJ IDEA</td><td>Liczba klas i metod, liczba linii kodu, złożoność, graf zależności.</td></tr>
+</table>
+<div class="podpis">Tabela 4. Zastosowane technologie i narzędzia</div>
+
+<!-- ============================================================ 5 -->
+<h1>5.&nbsp;&nbsp;Aktorzy systemu</h1>
+<p>Z systemu będą korzystać trzy grupy osób. Czwartym aktorem jest wbudowany zegar systemowy, który uruchamia zadania automatyczne. Aktorów opisuje tabela 5.</p>
+<table class="t">
+  <thead><tr><th style="width:22%">Aktor</th><th style="width:26%">Kto to jest</th><th>Funkcja w systemie</th></tr></thead>
+  <tr><td class="b">Pracownik</td><td>Każda osoba zatrudniona w firmie, której czas pracy jest rejestrowany</td><td>Rejestruje rozpoczęcie i zakończenie pracy oraz przerwy, przegląda swoją ewidencję i nadgodziny, składa wnioski o korektę i o nieobecność. Widzi tylko swoje dane.</td></tr>
+  <tr><td class="b">Kierownik</td><td>Kierownik działu (sam też jest pracownikiem)</td><td>Ma wszystkie funkcje pracownika, a dodatkowo przegląda ewidencję swojego działu, rozpatruje wnioski pracowników, generuje raporty miesięczne i zamyka miesiąc.</td></tr>
+  <tr><td class="b">Administrator</td><td>Osoba odpowiedzialna za system, np. z działu kadr lub IT</td><td>Zarządza kontami i rolami, działami oraz harmonogramami pracy, ręcznie poprawia wpisy (z uzasadnieniem) i przegląda dziennik zdarzeń.</td></tr>
+  <tr><td class="b">Zegar systemowy</td><td>Zadanie uruchamiane automatycznie przez serwer</td><td>Codziennie o 23:59 zamyka sesje, których pracownicy nie zakończyli, i oznacza je do sprawdzenia.</td></tr>
+</table>
+<div class="podpis">Tabela 5. Aktorzy systemu</div>
+<p>Kierownik dziedziczy po pracowniku (relacja generalizacji), bo sam też rejestruje swój czas pracy. Dzięki temu na diagramie nie trzeba drugi raz rysować jego połączeń z przypadkami użycia UC01–UC07. Administrator jest osobnym aktorem, ponieważ uprawnienia administracyjne i kierownicze celowo rozdzielono.</p>
+
+<!-- ============================================================ 6 -->
+<div class="rys">
+  <h1 style="text-align:left">6.&nbsp;&nbsp;Diagram przypadków użycia</h1>
+  <img src="diagrams/use_case.svg" alt="Diagram przypadków użycia">
+  <div class="podpis">Rysunek 1. Diagram przypadków użycia systemu rejestracji czasu pracy</div>
+</div>
+
+<div class="po-rys">
+<p>Na rysunku 1 przedstawiono diagram przypadków użycia. Relacja «include» oznacza, że dany przypadek zawsze wykonuje inny, np. każda korekta wpisu zawsze zapisuje zdarzenie w dzienniku. Relacja «extend» oznacza czynność opcjonalną, np. eksport raportu do pliku jest możliwy, ale niewymagany. Wszystkie przypadki użycia opisuje tabela 6.</p>
+<table class="t">
+  <thead><tr><th style="width:9%">ID</th><th style="width:29%">Przypadek użycia</th><th style="width:18%">Aktor</th><th>Opis</th></tr></thead>
+  <tr><td class="b">UC01</td><td>Zaloguj się</td><td>Pracownik, Kierownik, Administrator</td><td>Logowanie e-mailem i hasłem.</td></tr>
+  <tr><td class="b">UC02</td><td>Rozpocznij pracę</td><td>Pracownik</td><td>Rozpoczęcie nowej sesji pracy z godziną zapisaną przez serwer.</td></tr>
+  <tr><td class="b">UC03</td><td>Rozpocznij / zakończ przerwę</td><td>Pracownik</td><td>Przerwa w trakcie trwającej sesji.</td></tr>
+  <tr><td class="b">UC04</td><td>Zakończ pracę</td><td>Pracownik</td><td>Zamknięcie sesji i wyliczenie czasu netto.</td></tr>
+  <tr><td class="b">UC05</td><td>Przeglądaj własną ewidencję</td><td>Pracownik</td><td>Lista sesji z sumami dziennymi, miesięcznymi i nadgodzinami.</td></tr>
+  <tr><td class="b">UC06</td><td>Złóż wniosek o korektę wpisu</td><td>Pracownik («extend» UC05)</td><td>Z poziomu ewidencji pracownik wskazuje błędny lub brakujący wpis i podaje poprawne godziny.</td></tr>
+  <tr><td class="b">UC07</td><td>Złóż wniosek o nieobecność</td><td>Pracownik</td><td>Wniosek o urlop lub inną nieobecność w podanym terminie.</td></tr>
+  <tr><td class="b">UC08</td><td>Przeglądaj ewidencję zespołu</td><td>Kierownik</td><td>Bieżący status i ewidencja pracowników swojego działu.</td></tr>
+  <tr><td class="b">UC09</td><td>Rozpatrz wniosek</td><td>Kierownik</td><td>Zatwierdzenie lub odrzucenie wniosku. Zatwierdzona korekta zmienia wpis («include» UC16, UC17).</td></tr>
+  <tr><td class="b">UC10</td><td>Generuj raport miesięczny</td><td>Kierownik</td><td>Zestawienie czasu pracy, nadgodzin i nieobecności działu za wybrany miesiąc.</td></tr>
+  <tr><td class="b">UC11</td><td>Eksportuj raport (CSV / PDF)</td><td>Kierownik («extend» UC10)</td><td>Pobranie raportu jako pliku.</td></tr>
+  <tr><td class="b">UC12</td><td>Zamknij okres rozliczeniowy</td><td>Kierownik</td><td>Zablokowanie zmian we wpisach działu za dany miesiąc.</td></tr>
+  <tr><td class="b">UC13</td><td>Zarządzaj kontami użytkowników</td><td>Administrator</td><td>Dodawanie, edycja i dezaktywacja kont, nadawanie ról, przypisanie do działu i harmonogramu.</td></tr>
+  <tr><td class="b">UC14</td><td>Zarządzaj działami</td><td>Administrator</td><td>Tworzenie działów i wskazywanie ich kierowników.</td></tr>
+  <tr><td class="b">UC15</td><td>Definiuj harmonogramy pracy</td><td>Administrator</td><td>Ustalanie dziennych i tygodniowych norm oraz dni roboczych.</td></tr>
+  <tr><td class="b">UC16</td><td>Koryguj wpisy czasu pracy</td><td>Administrator</td><td>Ręczna zmiana lub dodanie wpisu z uzasadnieniem («include» UC17).</td></tr>
+  <tr><td class="b">UC17</td><td>Zapisz zdarzenie w dzienniku</td><td>– (wywoływany przez inne)</td><td>Zapis zmiany: kto, kiedy, stan przed zmianą i po niej.</td></tr>
+  <tr><td class="b">UC18</td><td>Przeglądaj dziennik zdarzeń</td><td>Administrator</td><td>Przeglądanie i filtrowanie historii zmian.</td></tr>
+  <tr><td class="b">UC19</td><td>Zamknij niezakończone sesje</td><td>Zegar systemowy</td><td>Automatyczne zamknięcie sesji otwartych po 23:59.</td></tr>
+</table>
+<div class="podpis">Tabela 6. Przypadki użycia</div>
+
+<p>Poniżej opisano krok po kroku dwa najważniejsze przypadki użycia.</p>
+<table class="t uc">
+  <tr><th>Przypadek użycia</th><td><b>UC02 – Rozpocznij pracę</b></td></tr>
+  <tr><th>Aktor</th><td>Pracownik</td></tr>
+  <tr><th>Warunek początkowy</th><td>Pracownik jest zalogowany, a jego konto jest aktywne.</td></tr>
+  <tr><th>Przebieg główny</th><td><ol>
+    <li>Pracownik klika „Rozpocznij pracę” na stronie głównej.</li>
+    <li>Strona wysyła żądanie do serwera razem z tokenem JWT.</li>
+    <li>Serwer sprawdza token i to, czy pracownik nie ma już otwartej sesji (RB-01).</li>
+    <li>Serwer zapisuje nową sesję z bieżącą godziną serwera i statusem „otwarta”.</li>
+    <li>Strona pokazuje status „W pracy” i licznik czasu.</li></ol></td></tr>
+  <tr><th>Przebiegi alternatywne</th><td>3a. Pracownik ma już otwartą sesję – serwer odmawia, a strona pokazuje komunikat.<br>3b. Token wygasł – strona przenosi pracownika do logowania (UC01).</td></tr>
+  <tr><th>Warunek końcowy</th><td>Pracownik ma dokładnie jedną otwartą sesję pracy.</td></tr>
+</table>
+<div class="podpis">Tabela 7. Opis przypadku użycia UC02</div>
+
+<table class="t uc">
+  <tr><th>Przypadek użycia</th><td><b>UC09 – Rozpatrz wniosek o korektę</b></td></tr>
+  <tr><th>Aktor</th><td>Kierownik</td></tr>
+  <tr><th>Warunek początkowy</th><td>Pracownik z działu kierownika złożył wniosek, który czeka na decyzję, a miesiąc, którego dotyczy, nie jest zamknięty.</td></tr>
+  <tr><th>Przebieg główny</th><td><ol>
+    <li>Kierownik otwiera listę oczekujących wniosków swojego działu.</li>
+    <li>Kierownik wybiera wniosek. System pokazuje obecny wpis, proponowane godziny i uzasadnienie.</li>
+    <li>Kierownik zatwierdza wniosek.</li>
+    <li>System w jednej transakcji zmienia status wniosku na „zatwierdzony”, poprawia sesję pracy (UC16) i zapisuje zdarzenie w dzienniku (UC17).</li>
+    <li>Pracownik widzi poprawioną ewidencję i decyzję kierownika.</li></ol></td></tr>
+  <tr><th>Przebiegi alternatywne</th><td>3a. Kierownik odrzuca wniosek – musi podać powód, a wpis zostaje bez zmian.<br>3b. Wniosek złożył sam kierownik – system nie pozwala go rozpatrzyć (RB-05).<br>4a. Poprawiona sesja nachodziłaby na inną sesję pracownika – system odrzuca zmianę z komunikatem.</td></tr>
+  <tr><th>Warunek końcowy</th><td>Wniosek jest rozpatrzony, a ewentualna zmiana jest zapisana w dzienniku zdarzeń.</td></tr>
+</table>
+<div class="podpis">Tabela 8. Opis przypadku użycia UC09</div>
+
+<!-- ============================================================ 7 -->
+<h1>7.&nbsp;&nbsp;Wymagania funkcjonalne</h1>
+<p>Wymagania funkcjonalne opisują, co system ma robić. Każde ma numer, powiązany przypadek użycia i priorytet: <b>MVP</b> oznacza wykonanie w kamieniu milowym 2, a <b>Docelowo</b> wykonanie w kamieniu milowym 3. Wymagania przedstawia tabela 9.</p>
+<table class="t">
+  <thead><tr><th style="width:10%">ID</th><th>Wymaganie</th><th style="width:12%">UC</th><th style="width:13%">Priorytet</th></tr></thead>
+  <tr><td class="grupa" colspan="4">Logowanie i konta</td></tr>
+  <tr><td class="b">FR-01</td><td>System umożliwia logowanie e-mailem i hasłem. Konto dezaktywowane nie może się zalogować.</td><td class="c">UC01</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-02</td><td>Administrator może dodać, edytować i dezaktywować konto oraz nadać mu rolę.</td><td class="c">UC13</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-03</td><td>Administrator może przypisać użytkownika do działu i harmonogramu pracy.</td><td class="c">UC13</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-04</td><td>Administrator może tworzyć i edytować działy oraz wskazać kierownika działu.</td><td class="c">UC14</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-05</td><td>Administrator może tworzyć harmonogramy pracy (norma dzienna, norma tygodniowa, dni robocze). Domyślny harmonogram to 8 h dziennie od poniedziałku do piątku.</td><td class="c">UC15</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-06</td><td>Zalogowany użytkownik może zmienić swoje hasło.</td><td class="c">–</td><td class="c">Docelowo</td></tr>
+  <tr><td class="grupa" colspan="4">Rejestracja czasu pracy</td></tr>
+  <tr><td class="b">FR-07</td><td>Pracownik może rozpocząć pracę. System zapisuje godzinę serwera i nie pozwala otworzyć drugiej sesji (RB-01).</td><td class="c">UC02</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-08</td><td>Pracownik może rozpocząć i zakończyć przerwę w trakcie sesji (RB-02).</td><td class="c">UC03</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-09</td><td>Pracownik może zakończyć pracę. System zamyka sesję i liczy jej czas netto.</td><td class="c">UC04</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-10</td><td>Strona główna pokazuje bieżący status pracownika („Poza pracą”, „W pracy”, „Przerwa”) i czas trwania sesji.</td><td class="c">UC02–UC04</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-11</td><td>System codziennie o 23:59 zamyka niezakończone sesje i oznacza je do sprawdzenia (RB-04).</td><td class="c">UC19</td><td class="c">Docelowo</td></tr>
+  <tr><td class="grupa" colspan="4">Ewidencja i raporty</td></tr>
+  <tr><td class="b">FR-12</td><td>Pracownik może przeglądać swoją ewidencję z podziałem na dni i miesiące, z sumą czasu pracy i nadgodzin.</td><td class="c">UC05</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-13</td><td>System liczy nadgodziny na podstawie harmonogramu pracownika (RB-03).</td><td class="c">UC05, UC10</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-14</td><td>Kierownik może przeglądać status i ewidencję tylko pracowników swojego działu (RB-05).</td><td class="c">UC08</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-15</td><td>Kierownik może wygenerować raport miesięczny działu: czas pracy, nadgodziny i dni nieobecności każdego pracownika.</td><td class="c">UC10</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-16</td><td>Kierownik może pobrać raport jako plik CSV i PDF.</td><td class="c">UC11</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-17</td><td>Kierownik może zamknąć miesiąc dla swojego działu. Po zamknięciu wpisów nie można zmieniać (RB-06).</td><td class="c">UC12</td><td class="c">Docelowo</td></tr>
+  <tr><td class="grupa" colspan="4">Wnioski, korekty i dziennik zdarzeń</td></tr>
+  <tr><td class="b">FR-18</td><td>Pracownik może złożyć wniosek o poprawienie sesji lub dodanie brakującej sesji, podając godziny i uzasadnienie.</td><td class="c">UC06</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-19</td><td>Pracownik może złożyć wniosek o nieobecność (rodzaj, data od–do). System nie przyjmie wniosków nachodzących na siebie terminami (RB-08).</td><td class="c">UC07</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-20</td><td>Kierownik może zatwierdzić lub odrzucić (z podaniem powodu) wniosek pracownika ze swojego działu. Zatwierdzona korekta zmienia sesję.</td><td class="c">UC09</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-21</td><td>Pracownik widzi status swoich wniosków i komentarz kierownika.</td><td class="c">UC06, UC07</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-22</td><td>Administrator może ręcznie poprawić lub dodać sesję dowolnego pracownika, podając uzasadnienie (RB-07).</td><td class="c">UC16</td><td class="c">MVP</td></tr>
+  <tr><td class="b">FR-23</td><td>Każda zmiana danych o czasie pracy (korekta, zatwierdzenie wniosku, automatyczne zamknięcie sesji) jest zapisywana w dzienniku zdarzeń.</td><td class="c">UC17</td><td class="c">Docelowo</td></tr>
+  <tr><td class="b">FR-24</td><td>Administrator może przeglądać dziennik zdarzeń i filtrować go po użytkowniku, dacie i rodzaju zmiany.</td><td class="c">UC18</td><td class="c">Docelowo</td></tr>
+</table>
+<div class="podpis">Tabela 9. Wymagania funkcjonalne</div>
+
+<!-- ============================================================ 8 -->
+<h1>8.&nbsp;&nbsp;Wymagania niefunkcjonalne</h1>
+<p>Wymagania niefunkcjonalne opisują, jak system ma działać. Każde z nich da się sprawdzić, co pozwoli zweryfikować je w kamieniu milowym 3. Przedstawia je tabela 10.</p>
+<table class="t">
+  <thead><tr><th style="width:10%">ID</th><th style="width:17%">Kategoria</th><th>Wymaganie</th><th style="width:25%">Jak sprawdzimy</th></tr></thead>
+  <tr><td class="b">NFR-01</td><td>Wydajność</td><td>Rozpoczęcie, przerwa i zakończenie pracy są zapisywane w czasie poniżej 0,5 s dla 95% żądań przy 50 użytkownikach jednocześnie.</td><td>Test obciążeniowy (k6 lub JMeter).</td></tr>
+  <tr><td class="b">NFR-02</td><td>Wydajność</td><td>Raport miesięczny działu do 50 osób generuje się w czasie poniżej 3 s.</td><td>Pomiar czasu odpowiedzi serwera.</td></tr>
+  <tr><td class="b">NFR-03</td><td>Bezpieczeństwo</td><td>Hasła są zapisywane tylko w postaci zaszyfrowanej (BCrypt) i nigdy nie są wysyłane przez API.</td><td>Przegląd kodu i bazy danych.</td></tr>
+  <tr><td class="b">NFR-04</td><td>Bezpieczeństwo</td><td>Wszystkie funkcje poza logowaniem wymagają ważnego tokenu (ważność 8 h). Uprawnienia są sprawdzane na serwerze, a próba wejścia w cudze dane kończy się odmową (kod 403).</td><td>Testy dla każdej roli.</td></tr>
+  <tr><td class="b">NFR-05</td><td>Bezpieczeństwo</td><td>Komunikacja między przeglądarką a serwerem odbywa się przez szyfrowane połączenie HTTPS.</td><td>Sprawdzenie konfiguracji serwera.</td></tr>
+  <tr><td class="b">NFR-06</td><td>Spójność danych</td><td>Godziny zdarzeń zapisuje serwer. Reguła jednej otwartej sesji jest pilnowana także przez bazę danych, więc dwa szybkie kliknięcia nie utworzą dwóch sesji.</td><td>Test wysłania dwóch żądań jednocześnie.</td></tr>
+  <tr><td class="b">NFR-07</td><td>Niezawodność</td><td>Operacje zmieniające kilka rzeczy naraz (np. zatwierdzenie korekty) wykonują się w całości albo wcale.</td><td>Test z wymuszonym błędem.</td></tr>
+  <tr><td class="b">NFR-08</td><td>Niezawodność</td><td>Kopia zapasowa bazy danych jest wykonywana codziennie.</td><td>Sprawdzenie zadania kopii zapasowej.</td></tr>
+  <tr><td class="b">NFR-09</td><td>Użyteczność</td><td>Rozpoczęcie i zakończenie pracy wymaga jednego kliknięcia na stronie głównej. Interfejs jest w języku polskim.</td><td>Przegląd interfejsu.</td></tr>
+  <tr><td class="b">NFR-10</td><td>Przenośność</td><td>Strona działa poprawnie na ekranach od 360 px szerokości w przeglądarkach Chrome, Firefox i Edge.</td><td>Test w trybie mobilnym przeglądarki.</td></tr>
+  <tr><td class="b">NFR-11</td><td>Uruchamianie</td><td>Cały system uruchamia się poleceniem <code>docker compose up</code> razem z danymi testowymi.</td><td>Uruchomienie na innym komputerze.</td></tr>
+  <tr><td class="b">NFR-12</td><td>Utrzymanie</td><td>Kod backendu ma budowę warstwową, a logika biznesowa jest pokryta testami jednostkowymi w co najmniej 60%.</td><td>Raport JaCoCo, SonarQube.</td></tr>
+  <tr><td class="b">NFR-13</td><td>Poprawność czasu</td><td>Sesje obejmujące zmianę czasu (marzec, październik) mają poprawnie policzony czas trwania.</td><td>Test jednostkowy.</td></tr>
+  <tr><td class="b">NFR-14</td><td>Zgodność z RODO</td><td>System przechowuje tylko niezbędne dane osobowe. Konta nie są usuwane, tylko dezaktywowane, aby nie utracić ewidencji czasu pracy.</td><td>Przegląd modelu danych.</td></tr>
+</table>
+<div class="podpis">Tabela 10. Wymagania niefunkcjonalne</div>
+</div>
+
+<!-- ============================================================ 9 -->
+<div class="rys">
+  <h1 style="text-align:left">9.&nbsp;&nbsp;Wstępny diagram klas</h1>
+  <img src="diagrams/class.svg" alt="Wstępny diagram klas">
+  <div class="podpis">Rysunek 2. Wstępny diagram klas</div>
+</div>
+
+<div class="po-rys">
+<p>Na rysunku 2 przedstawiono wstępny diagram klas, czyli model danych systemu. Typy atrybutów odpowiadają typom języka Java. Zadania poszczególnych klas opisuje tabela 11.</p>
+<table class="t">
+  <thead><tr><th style="width:27%">Klasa</th><th>Za co odpowiada</th></tr></thead>
+  <tr><td class="b">Uzytkownik</td><td>Konto osoby korzystającej z systemu: dane, zaszyfrowane hasło, rola i informacja, czy konto jest aktywne. Należy do działu i ma przypisany harmonogram pracy.</td></tr>
+  <tr><td class="b">Dzial</td><td>Dział firmy z jednym kierownikiem. Wyznacza, czyje dane widzi kierownik.</td></tr>
+  <tr><td class="b">HarmonogramPracy</td><td>Normy czasu pracy i dni robocze. Liczy nadgodziny.</td></tr>
+  <tr><td class="b">SesjaPracy</td><td>Jeden okres pracy: godzina rozpoczęcia i zakończenia, status i źródło wpisu (aplikacja, korekta, automat). Liczy czas netto po odjęciu przerw.</td></tr>
+  <tr><td class="b">Przerwa</td><td>Przerwa w trakcie sesji. Nie istnieje bez sesji, dlatego połączono je kompozycją.</td></tr>
+  <tr><td class="b">Wniosek (abstrakcyjna)</td><td>Wspólne dane wszystkich wniosków: data złożenia, status, uzasadnienie i komentarz kierownika oraz operacje zatwierdzenia i odrzucenia.</td></tr>
+  <tr><td class="b">WniosekKorekty</td><td>Wniosek o poprawienie sesji lub dodanie brakującej. W drugim przypadku nie jest powiązany z żadną sesją, stąd krotność 0..1.</td></tr>
+  <tr><td class="b">WniosekNieobecnosci</td><td>Wniosek o urlop lub inną nieobecność. Liczy, ile dni roboczych obejmuje.</td></tr>
+  <tr><td class="b">OkresRozliczeniowy</td><td>Miesiąc rozliczeniowy działu. Po zamknięciu blokuje zmiany wpisów.</td></tr>
+  <tr><td class="b">WpisAudytu</td><td>Jeden wpis w dzienniku zdarzeń: kto, kiedy, co zmienił, stan przed zmianą i po niej.</td></tr>
+  <tr><td class="b">RaportMiesieczny</td><td>Wynik obliczeń za miesiąc (czas pracy, nadgodziny, nieobecności). Nie jest zapisywany w bazie, tylko liczony na żądanie.</td></tr>
+  <tr><td class="b">Typy wyliczeniowe</td><td>Rola, StatusSesji, ZrodloWpisu, StatusWniosku, TypNieobecnosci, StatusOkresu – stałe listy dozwolonych wartości.</td></tr>
+</table>
+<div class="podpis">Tabela 11. Opis klas</div>
+<p>Przy projektowaniu modelu podjęto kilka decyzji. Oba rodzaje wniosków przechodzą tę samą drogę (złożony, zatwierdzony lub odrzucony), dlatego wspólną logikę umieszczono w klasie bazowej <i>Wniosek</i>. Czas przechowywany jest w typach <i>LocalDateTime</i> i <i>Duration</i>, a nie w liczbach zmiennoprzecinkowych, co eliminuje błędy zaokrągleń przy sumowaniu godzin. Ten sam użytkownik może występować w różnych rolach, dlatego między <i>Uzytkownik</i> i <i>Dzial</i> są dwie asocjacje („należy do” i „kieruje”), a między <i>Uzytkownik</i> i <i>Wniosek</i> również dwie („składa” i „rozpatruje”).</p>
+<p>Diagram jest wstępny. W kamieniu milowym 2 zostanie zaktualizowany zgodnie z rzeczywistą implementacją.</p>
+
+<!-- ============================================================ 10 -->
+<h1>10.&nbsp;&nbsp;Repozytorium projektu</h1>
+<p>Projekt jest prowadzony we wspólnym repozytorium Git: <span class="todo">[link do repozytorium GitHub]</span>. Repozytorium zawiera katalogi <code>backend/</code> (aplikacja Spring Boot), <code>frontend/</code> (aplikacja React), <code>docs/</code> (dokumentacja i diagramy) oraz plik <code>docker-compose.yml</code>.</p>
+<p>Gałąź <code>main</code> zawsze zawiera działającą wersję. Każde zadanie jest wykonywane na osobnej gałęzi i trafia do <code>main</code> przez pull request sprawdzony przez drugą osobę z zespołu. Każdy członek zespołu zapisuje zmiany ze swojego konta, dzięki czemu historia repozytorium pokazuje wkład każdej osoby. Wstępny podział prac przedstawia tabela 12.</p>
+<table class="t">
+  <thead><tr><th style="width:30%">Członek zespołu</th><th>Zakres prac</th></tr></thead>
+  <tr><td class="b">Szymon Dudek</td><td><span class="todo">[np. backend: rejestracja czasu, ewidencja, raporty]</span></td></tr>
+  <tr><td class="b"><span class="todo">[Imię Nazwisko]</span></td><td><span class="todo">[np. frontend: strony pracownika, kierownika i administratora]</span></td></tr>
+</table>
+<div class="podpis">Tabela 12. Podział prac w zespole</div>
+</div>
+
+</body>
+</html>

@@ -152,60 +152,43 @@ def relation(src: UC, dst: UC, label, label_dx=0, label_dy=0):
 
 
 def use_case():
-    W, H = 1120, 930
-    A, B = 410, 730  # kolumny przypadkow uzycia
+    W, H = 1100, 760
+    A, B = 400, 720  # kolumny przypadkow uzycia
     uc = {u.uid: u for u in [
-        UC("UC01", "Zaloguj się", 570, 92),
-        UC("UC02", "Rozpocznij pracę", A, 190),
-        UC("UC03", "Rozpocznij / zakończ przerwę", A, 255),
-        UC("UC04", "Zakończ pracę", A, 320),
-        UC("UC05", "Przeglądaj własną ewidencję", A, 395),
-        UC("UC06", "Złóż wniosek o korektę wpisu", B, 395),
-        UC("UC07", "Złóż wniosek o nieobecność", A - 45, 478),
-        UC("UC08", "Przeglądaj ewidencję zespołu", A, 580),
-        UC("UC09", "Rozpatrz wniosek", A, 650),
-        UC("UC10", "Generuj raport miesięczny", A, 720),
-        UC("UC11", "Eksportuj raport (CSV / PDF)", B, 720),
-        UC("UC12", "Zamknij okres rozliczeniowy", A, 790),
-        UC("UC13", "Zarządzaj kontami użytkowników", B, 190),
-        UC("UC14", "Zarządzaj działami", B, 255),
-        UC("UC15", "Definiuj harmonogramy pracy", B, 320),
-        UC("UC16", "Koryguj wpisy czasu pracy", B, 480),
-        UC("UC17", "Zapisz zdarzenie w dzienniku", B, 565),
-        UC("UC18", "Przeglądaj dziennik zdarzeń", B, 640),
-        UC("UC19", "Zamknij niezakończone sesje", B, 860),
+        UC("UC01", "Zaloguj się", 560, 88),
+        UC("UC02", "Rozpocznij pracę", A, 180),
+        UC("UC03", "Rozpocznij / zakończ przerwę", A, 245),
+        UC("UC04", "Zakończ pracę", A, 310),
+        UC("UC05", "Przeglądaj swój czas pracy", A, 375),
+        UC("UC06", "Złóż wniosek o urlop", A - 40, 450),
+        UC("UC07", "Przeglądaj czas pracy działu", A, 550),
+        UC("UC08", "Rozpatrz wniosek o urlop", A, 615),
+        UC("UC09", "Generuj raport miesięczny", A, 680),
+        UC("UC10", "Zarządzaj kontami użytkowników", B, 180),
+        UC("UC11", "Zarządzaj działami", B, 245),
+        UC("UC12", "Popraw wpis czasu pracy", B, 310),
     ]}
-    prac = Actor("Pracownik", 90, 265)
-    kier = Actor("Kierownik", 90, 690)
-    admin = Actor("Administrator", 1030, 300)
-    zegar = Actor("Zegar systemowy\n(harmonogram zadań)", 1030, 840)
+    prac = Actor("Pracownik", 90, 260)
+    kier = Actor("Kierownik", 90, 615)
+    admin = Actor("Administrator", 1010, 250)
 
-    body = (f'<rect x="215" y="28" width="710" height="880" rx="6" fill="#fbfdff" '
+    body = (f'<rect x="205" y="28" width="700" height="705" rx="6" fill="#fbfdff" '
             f'stroke="{LINE}" stroke-width="1.5"/>')
-    body += t(570, 50, "System rejestracji czasu pracy", 15, weight="bold")
+    body += t(555, 50, "System rejestracji czasu pracy", 15, weight="bold")
 
-    # asocjacje aktor - przypadek uzycia
-    for k in ["UC01", "UC02", "UC03", "UC04", "UC05", "UC07"]:
+    for k in ["UC01", "UC02", "UC03", "UC04", "UC05", "UC06"]:
         body += assoc(prac, uc[k], "R")
-    for k in ["UC08", "UC09", "UC10", "UC12"]:
+    for k in ["UC07", "UC08", "UC09"]:
         body += assoc(kier, uc[k], "R")
-    for k in ["UC01", "UC13", "UC14", "UC15", "UC16", "UC18"]:
+    for k in ["UC01", "UC10", "UC11", "UC12"]:
         body += assoc(admin, uc[k], "L")
-    body += assoc(zegar, uc["UC19"], "L")
 
     # generalizacja aktorow: Kierownik jest Pracownikiem
     body += polyline([kier.head_top, (prac.feet[0], prac.feet[1] + 42)], end="tri")
 
-    # relacje include / extend
-    body += relation(uc["UC06"], uc["UC05"], "extend", label_dy=-10)
-    body += relation(uc["UC11"], uc["UC10"], "extend", label_dy=-10)
-    body += relation(uc["UC16"], uc["UC17"], "include", label_dx=34)
-    body += relation(uc["UC09"], uc["UC17"], "include", label_dy=-8)
-    body += relation(uc["UC09"], uc["UC16"], "include", label_dx=-40, label_dy=-14)
-
     for u in uc.values():
         body += u.svg()
-    for a in (prac, kier, admin, zegar):
+    for a in (prac, kier, admin):
         body += a.svg()
     return svg_doc(W, H, body, "Diagram przypadków użycia")
 
@@ -288,111 +271,53 @@ def link(pts, m1=None, m2=None, label=None, lpos=None, kind="assoc", lanchor="mi
 
 
 def class_diagram():
-    C0, C1, C2, C3 = 20, 400, 770, 1090
-    TOP = 40
+    C0, C1, C2 = 20, 390, 850
+    TOP = 30
 
     uz = Box("Uzytkownik", C1, TOP, [
         "- id: Long", "- imie: String", "- nazwisko: String", "- email: String",
-        "- hasloHash: String", "- rola: Rola", "- aktywny: boolean", "- dataZatrudnienia: LocalDate"],
-        ["+ pelneImieNazwisko(): String", "+ dezaktywuj(): void"])
-    dz = Box("Dzial", C0, TOP + 10, ["- id: Long", "- nazwa: String"],
-             ["+ dodajPracownika(u: Uzytkownik): void"])
-    okres = Box("OkresRozliczeniowy", C0, 0, [
-        "- id: Long", "- rok: int", "- miesiac: int", "- status: StatusOkresu",
-        "- dataZamkniecia: LocalDateTime"],
-        ["+ zamknij(kierownik: Uzytkownik): void", "+ czyZamkniety(): boolean"])
-    okres.y = dz.bottom + 60
-    audyt = Box("WpisAudytu", C0, 0, [
-        "- id: Long", "- czas: LocalDateTime", "- akcja: String", "- typEncji: String",
-        "- idEncji: Long", "- stareDane: String", "- noweDane: String"])
-    audyt.y = okres.bottom + 50
+        "- hasloHash: String", "- rola: Rola", "- aktywny: boolean", "- normaDzienna: int"],
+        ["+ dezaktywuj(): void", "+ czasPracy(od: LocalDate, do: LocalDate): Duration"])
+    dz = Box("Dzial", C0, TOP + 20, ["- id: Long", "- nazwa: String"])
+    wn = Box("WniosekUrlopowy", C2, TOP, [
+        "- id: Long", "- dataOd: LocalDate", "- dataDo: LocalDate",
+        "- status: StatusWniosku", "- komentarz: String"],
+        ["+ zatwierdz(): void", "+ odrzuc(powod: String): void"])
     sesja = Box("SesjaPracy", C1, uz.bottom + 80, [
-        "- id: Long", "- rozpoczecie: LocalDateTime", "- zakonczenie: LocalDateTime",
-        "- status: StatusSesji", "- zrodlo: ZrodloWpisu"],
-        ["+ zakoncz(czas: LocalDateTime): void", "+ rozpocznijPrzerwe(): Przerwa", "+ czasNetto(): Duration"])
-    przerwa = Box("Przerwa", C1, 0, ["- id: Long", "- rozpoczecie: LocalDateTime", "- zakonczenie: LocalDateTime"],
-                  ["+ czasTrwania(): Duration"])
-    przerwa.y = sesja.bottom + 60
-    raport = Box("RaportMiesieczny", C2, TOP, [
-        "- rok: int", "- miesiac: int", "- czasPracy: Duration", "- nadgodziny: Duration",
-        "- dniNieobecnosci: int"],
-        ["+ eksportujCsv(): byte[]"], stereo="«niepersystentna»")
-    harm = Box("HarmonogramPracy", C3, TOP, [
-        "- id: Long", "- nazwa: String", "- normaDobowa: Duration", "- normaTygodniowa: Duration",
-        "- dniRobocze: Set<DayOfWeek>"],
-        ["+ czyDzienRoboczy(d: LocalDate): boolean", "+ nadgodziny(czas: Duration): Duration"])
-    wn = Box("Wniosek", C2, raport.bottom + 90, [
-        "- id: Long", "- dataZlozenia: LocalDateTime", "- status: StatusWniosku",
-        "- uzasadnienie: String", "- komentarz: String"],
-        ["+ zatwierdz(k: Uzytkownik): void", "+ odrzuc(k: Uzytkownik, powod: String): void"],
-        stereo="{abstract}", abstract=True)
-    wk = Box("WniosekKorekty", C2, wn.bottom + 70, [
-        "- noweRozpoczecie: LocalDateTime", "- noweZakonczenie: LocalDateTime"], ["+ zastosuj(): void"])
-    wnb = Box("WniosekNieobecnosci", C3, wn.bottom + 70, [
-        "- typ: TypNieobecnosci", "- dataOd: LocalDate", "- dataDo: LocalDate"],
-        ["+ liczbaDniRoboczych(): int"])
+        "- id: Long", "- rozpoczecie: LocalDateTime", "- zakonczenie: LocalDateTime"],
+        ["+ zakoncz(): void", "+ czasPracy(): Duration", "+ nadgodziny(norma: int): Duration"])
+    przerwa = Box("Przerwa", C2, sesja.y, [
+        "- id: Long", "- rozpoczecie: LocalDateTime", "- zakonczenie: LocalDateTime"],
+        ["+ czasTrwania(): Duration"])
+    rola = Box("Rola", C0, dz.bottom + 110, ["PRACOWNIK", "KIEROWNIK", "ADMINISTRATOR"],
+               stereo="«enumeration»", enum=True)
+    status = Box("StatusWniosku", C0, rola.bottom + 30, ["OCZEKUJACY", "ZATWIERDZONY", "ODRZUCONY"],
+                 stereo="«enumeration»", enum=True)
 
-    classes = [uz, dz, okres, audyt, sesja, przerwa, raport, harm, wn, wk, wnb]
-
-    # wyliczenia w dolnym rzedzie
-    enum_y = max(c.bottom for c in classes) + 60
-    enums_def = [
-        ("Rola", ["PRACOWNIK", "KIEROWNIK", "ADMINISTRATOR"]),
-        ("StatusSesji", ["OTWARTA", "ZAKONCZONA", "DO_WERYFIKACJI"]),
-        ("ZrodloWpisu", ["APLIKACJA", "KOREKTA", "AUTOMAT"]),
-        ("StatusWniosku", ["OCZEKUJACY", "ZATWIERDZONY", "ODRZUCONY"]),
-        ("TypNieobecnosci", ["URLOP_WYPOCZYNKOWY", "URLOP_NA_ZADANIE", "ZWOLNIENIE_LEKARSKIE", "INNA"]),
-        ("StatusOkresu", ["OTWARTY", "ZAMKNIETY"]),
-    ]
-    enums, ex = [], C0
-    for name, vals in enums_def:
-        e = Box(name, ex, enum_y, vals, stereo="«enumeration»", enum=True)
-        enums.append(e)
-        ex = e.right + 28
-
-    W = int(max(c.right for c in classes + enums) + 30)
-    H = int(max(e.bottom for e in enums) + 25)
+    boxes = [uz, dz, wn, sesja, przerwa, rola, status]
+    W = int(max(b.right for b in boxes) + 30)
+    H = int(max(b.bottom for b in boxes) + 25)
 
     b = ""
-    # Uzytkownik - Dzial (nalezy do / kieruje)
-    y1, y2 = dz.y + 30, dz.y + 75
-    b += link([uz.L(y1), dz.R(y1)], "*", "0..1", "należy do", ((uz.x + dz.right) / 2, y1 - 6))
+    # Uzytkownik - Dzial
+    y1, y2 = dz.y + 25, dz.y + 60
+    b += link([uz.L(y1), dz.R(y1)], "*", "1", "należy do", ((uz.x + dz.right) / 2, y1 - 6))
     b += link([uz.L(y2), dz.R(y2)], "1", "0..*", "kieruje", ((uz.x + dz.right) / 2, y2 - 6))
-    # Dzial - OkresRozliczeniowy
-    b += link([dz.B(dz.x + 60), okres.T(dz.x + 60)], "1", "*", "rozlicza", (dz.x + 70, (dz.bottom + okres.y) / 2 + 4), lanchor="start")
-    # Uzytkownik - WpisAudytu (autor zmiany)
-    gx = (max(okres.right, dz.right) + uz.x) / 2 + 15
-    ya = uz.bottom - 25
-    yb = audyt.y + 40
-    b += link([uz.L(ya), (gx, ya), (gx, yb), audyt.R(yb)], "1", "*", "jest autorem", ((audyt.right + gx) / 2, yb + 16))
     # Uzytkownik - SesjaPracy
-    b += link([uz.B(uz.cx), sesja.T(uz.cx)], "1", "*", "rejestruje", (uz.cx + 8, (uz.bottom + sesja.y) / 2 + 4), lanchor="start")
+    b += link([uz.B(uz.cx), sesja.T(uz.cx)], "1", "*", "rejestruje",
+              (uz.cx + 8, (uz.bottom + sesja.y) / 2 + 4), lanchor="start")
     # SesjaPracy <>- Przerwa (kompozycja)
-    b += link([sesja.B(sesja.cx), przerwa.T(sesja.cx)], "1", "0..*", "zawiera", (sesja.cx + 8, (sesja.bottom + przerwa.y) / 2 + 4), kind="comp", lanchor="start")
-    # RaportMiesieczny -> Uzytkownik
-    yr = raport.y + 40
-    b += link([raport.L(yr), uz.R(yr)], "*", "1", "dotyczy", ((uz.right + raport.x) / 2, yr - 6))
-    # Uzytkownik - HarmonogramPracy (trasa nad diagramem)
-    hx = uz.x + 40
-    b += link([uz.T(hx), (hx, 18), (harm.cx, 18), harm.T(harm.cx)], "*", "1", "podlega", ((hx + harm.cx) / 2, 14))
-    # Uzytkownik - Wniosek (sklada / rozpatruje)
-    gx1, gx2 = sesja.right + 60, sesja.right + 30
-    s1, s2 = uz.bottom - 60, uz.bottom - 30
-    w1, w2 = wn.y + 40, wn.y + 85
-    b += link([uz.R(s1), (gx1, s1), (gx1, w1), wn.L(w1)], "1", "*", "składa", (gx1 + 4, w1 - 6), lanchor="start")
-    b += link([uz.R(s2), (gx2, s2), (gx2, w2), wn.L(w2)], "0..1", "*", "rozpatruje", (gx2 + 4, w2 - 6), lanchor="start")
-    # generalizacja wnioskow
-    jy = wn.bottom + 35
-    b += polyline([(wk.cx, wk.y), (wk.cx, jy), (wnb.cx, jy), (wnb.cx, wnb.y)])
-    b += polyline([(wn.cx, jy), (wn.cx, wn.bottom)], end="tri")
-    # WniosekKorekty -> SesjaPracy
-    gk = wk.x - 30
-    yk1, yk2 = wk.y + 45, sesja.bottom - 30
-    b += link([wk.L(yk1), (gk, yk1), (gk, yk2), sesja.R(yk2)], "*", "0..1", "koryguje", (gk - 6, (yk1 + yk2) / 2 + 20), lanchor="end")
+    yp = sesja.y + 50
+    b += link([sesja.R(yp), przerwa.L(yp)], "1", "0..*", "zawiera",
+              ((sesja.right + przerwa.x) / 2, yp - 8), kind="comp")
+    # Uzytkownik - WniosekUrlopowy
+    w1, w2 = wn.y + 45, wn.y + 105
+    b += link([uz.R(w1), wn.L(w1)], "1", "*", "składa", ((uz.right + wn.x) / 2, w1 - 6))
+    b += link([uz.R(w2), wn.L(w2)], "0..1", "*", "rozpatruje", ((uz.right + wn.x) / 2, w2 - 6))
 
-    for c in classes + enums:
-        b += c.svg()
-    b += t(C0, enum_y - 18, "Typy wyliczeniowe (używane jako typy atrybutów powyższych klas):", 12, anchor="start", style="italic", fill="#475569")
+    for box in boxes:
+        b += box.svg()
+    b += t(C0, rola.y - 14, "Typy wyliczeniowe:", 12, anchor="start", style="italic", fill="#475569")
     return svg_doc(W, H, b, "Wstępny diagram klas")
 
 

@@ -1,0 +1,50 @@
+:root {
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+body {
+  margin: 0;
+}
+
+.naglowek {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  background: #1d4e89;
+  color: #fff;
+}
+
+.naglowek nav {
+  display: flex;
+  gap: 14px;
+}
+
+.naglowek a {
+  color: #dbe7f5;
+  text-decoration: none;
+}
+
+.naglowek a.active {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.tresc {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.ok {
+  color: #0b6e4f;
+}
+
+.blad {
+  color: #b42318;
+}

@@ -1,0 +1,18 @@
+# Baza danych PostgreSQL dla backendu.
+# Uruchomienie: docker compose up -d
+# (backend i frontend dojda tu w kolejnych etapach, wymaganie "uruchomienie jednym poleceniem")
+services:
+  db:
+    image: postgres:16.4
+    container_name: czas-pracy-db
+    environment:
+      POSTGRES_DB: czas_pracy
+      POSTGRES_USER: czas_pracy
+      POSTGRES_PASSWORD: czas_pracy
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>KM2 System rejestracji czasu pracy</title>
+<style>
+  @page { size: A4; margin: 25mm 25mm 25mm 25mm; }
+  @page landscape { size: A4 landscape; margin: 15mm 18mm 15mm 18mm; }
+
+  body { font-family: "Times New Roman", Times, serif; font-size: 12pt; line-height: 1.5; color: #000; background: #fff; margin: 0; }
+
+  /* naglowek uczelni */
+  .uczelnia { font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-align: center; font-size: 16pt; letter-spacing: 5pt; margin: 0; }
+  .wydzial { font-family: "Arial Narrow", Arial, Helvetica, sans-serif; font-weight: bold; text-align: center; font-size: 14pt; margin: 4pt 0 6pt; }
+  .kreska { border: none; border-top: 2pt solid #000; margin: 0 0 22pt; }
+  table.metryka { width: 100%; border-collapse: collapse; font-size: 10.5pt; line-height: 1.3; margin-bottom: 18pt; }
+  table.metryka td { border: 0.75pt solid #000; text-align: center; padding: 6pt; }
+
+  /* rozdzialy */
+  h1 { font-size: 12pt; font-weight: bold; margin: 12pt 0 2pt; padding-left: 1.1cm; text-indent: -0.6cm; break-after: avoid; }
+  p { margin: 0 0 0 1.1cm; text-align: justify; text-indent: 1.25cm; }
+  ul { margin: 0 0 4pt 1.1cm; padding-left: 0.9cm; text-align: justify; }
+  li { margin: 0; }
+
+  /* tabele */
+  table.t { width: 100%; border-collapse: collapse; font-size: 11pt; line-height: 1.3; margin: 6pt 0 0; }
+  table.t th, table.t td { border: 0.75pt solid #000; padding: 2pt 5pt; vertical-align: top; text-align: left; }
+  table.t th { text-align: center; font-weight: bold; }
+  table.t thead { display: table-header-group; }
+  table.t tr { break-inside: avoid; }
+  code { font-family: "Courier New", monospace; font-size: 10.5pt; }
+
+  /* strony z diagramami */
+  .rys { page: landscape; break-before: page; text-align: center; line-height: 1.2; }
+  .rys h1 { margin: 0 0 6pt; text-align: left; }
+  .rys img { display: block; margin: 0 auto; max-width: 100%; max-height: 118mm; }
+  .rys.duzy img { max-height: 150mm; }
+  .rys p, .pion p, .rys ul, .pion ul { line-height: 1.5; text-align: justify; }
+  .rys p, .pion p { margin-left: 0; }
+  .rys ul { margin-left: 0; }
+  .podpis { text-align: center; font-style: italic; margin: 4pt 0 10pt; text-indent: 0; }
+  .po-rys { break-before: page; }
+  .pion { text-align: center; }
+  .pion.nowa { break-before: page; }
+  .pion h1 { text-align: left; }
+  .pion img { display: block; margin: 6pt auto 0; max-width: 100%; max-height: 205mm; }
+  a { color: #000; }
+  .todo { background: #fff2a8; }
+</style>
+</head>
+<body>
+
+<div class="uczelnia">POLITECHNIKA ŚWIĘTOKRZYSKA</div>
+<div class="wydzial">Wydział Elektrotechniki, Automatyki i Informatyki</div>
+<hr class="kreska">
+
+<table class="metryka">
+  <tr><td colspan="2"><b>Politechnika Świętokrzyska</b></td></tr>
+  <tr><td colspan="2"><b>Studia niestacjonarne (semestr zimowy)</b></td></tr>
+  <tr><td style="width:50%"><b>Modelowanie i analiza systemów informatycznych</b></td><td><b>2026/2027</b></td></tr>
+  <tr><td colspan="2"><b>Projekt, kamień milowy 2</b><br>Temat: System rejestracji czasu pracy</td></tr>
+  <tr><td><b>Imię i nazwisko:</b><br>Szymon Dudek<br>Bartosz Fijołek<br>Bartłomiej Łukasiewicz</td><td><b>Grupa:</b><br>1IZ22B</td></tr>
+  <tr><td colspan="2"><b>Dzień oddania:</b> <span class="todo">[dd.mm.2026]</span></td></tr>
+</table>
+
+<h1>1.&nbsp;&nbsp;Temat projektu</h1>
+<p>Tematem projektu jest system rejestracji czasu pracy. Jest to aplikacja internetowa, w której pracownicy zapisują, kiedy zaczęli i skończyli pracę oraz kiedy mieli przerwę. System sam liczy przepracowane godziny i nadgodziny. Kierownik widzi czas pracy swojego działu i może przygotować raport za cały miesiąc.</p>
+
+<h1>2.&nbsp;&nbsp;Cel i zakres systemu</h1>
+<p>Celem systemu jest zastąpienie papierowych list obecności i arkuszy w Excelu jedną aplikacją. Pracownik zapisuje czas pracy jednym kliknięciem, a firma ma dokładne dane o przepracowanych godzinach bez ręcznego liczenia.</p>
+<p>System obejmuje:</p>
+<ul>
+  <li>zapisywanie rozpoczęcia pracy, przerw i zakończenia pracy,</li>
+  <li>podgląd czasu pracy z podziałem na dni i miesiące,</li>
+  <li>automatyczne liczenie nadgodzin,</li>
+  <li>wnioski urlopowe rozpatrywane przez kierownika,</li>
+  <li>raport miesięczny dla kierownika z możliwością pobrania jako plik CSV,</li>
+  <li>zarządzanie kontami, rolami i działami,</li>
+  <li>poprawianie błędnych wpisów przez administratora.</li>
+</ul>
+<p>System nie liczy wynagrodzeń i nie obsługuje czytników kart. Zakres systemu nie zmienił się od kamienia milowego 1.</p>
+
+<h1>3.&nbsp;&nbsp;Założenia projektowe i technologie</h1>
+<p>Przyjęto następujące założenia:</p>
+<ul>
+  <li>system jest aplikacją internetową działającą w przeglądarce,</li>
+  <li>strona dla użytkowników komunikuje się z serwerem przez REST API,</li>
+  <li>cała logika systemu i sprawdzanie uprawnień odbywają się na serwerze,</li>
+  <li>serwer ma budowę warstwową: kontrolery, serwisy i repozytoria,</li>
+  <li>godzinę rozpoczęcia i zakończenia pracy zapisuje serwer, a nie urządzenie pracownika.</li>
+</ul>
+<p>Do wykonania systemu użyto:</p>
+<ul>
+  <li>Java 21 i Spring Boot 3.5 (Spring Web, Spring Data JPA) po stronie serwera,</li>
+  <li>React 19 i TypeScript (Vite, React Router) po stronie przeglądarki,</li>
+  <li>bazy danych PostgreSQL 16 uruchamianej w Dockerze, a do szybkiego uruchamiania i testów bazy H2 w pamięci,</li>
+  <li>JUnit 5 i Mockito do testów automatycznych,</li>
+  <li>Spring Security i tokenów JWT do logowania (w trakcie realizacji),</li>
+  <li>Git i GitHub do wspólnej pracy nad kodem,</li>
+  <li>IntelliJ IDEA i Visual Studio Code jako środowisk programistycznych.</li>
+</ul>
+
+<h1>4.&nbsp;&nbsp;Aktorzy systemu</h1>
+<p><b>Pracownik</b> to podstawowy użytkownik systemu. Zapisuje swój czas pracy, przegląda swoje godziny i składa wnioski o urlop.</p>
+<p><b>Kierownik</b> może robić to samo co pracownik, bo sam też zapisuje swój czas pracy. Dlatego na diagramie przypadków użycia dziedziczy po pracowniku. Dodatkowo widzi czas pracy pracowników ze swojego działu, rozpatruje ich wnioski urlopowe i generuje raport miesięczny.</p>
+<p><b>Administrator</b> zakłada konta użytkowników, nadaje im role i tworzy działy. Może też poprawić wpis czasu pracy, na przykład gdy pracownik zapomniał zakończyć pracę.</p>
+
+<div class="rys">
+  <h1>5.&nbsp;&nbsp;Diagram przypadków użycia</h1>
+  <img src="diagrams/use_case.svg" alt="Diagram przypadków użycia">
+  <div class="podpis">Rysunek 1. Diagram przypadków użycia</div>
+  <p>Diagram przypadków użycia pokazuje, co każdy aktor może zrobić w systemie. Pracownik i administrator najpierw logują się do systemu (UC01). Pracownik rozpoczyna i kończy pracę, robi przerwy, przegląda swój czas pracy i składa wnioski o urlop (UC02 do UC06). Kierownik dziedziczy po pracowniku, więc ma te same możliwości. Dodatkowo przegląda czas pracy swojego działu, rozpatruje wnioski urlopowe i generuje raport miesięczny (UC07 do UC09). Administrator zarządza kontami i działami oraz poprawia błędne wpisy czasu pracy (UC10 do UC12).</p>
+</div>
+
+<div>
+
+<h1>6.&nbsp;&nbsp;Wymagania funkcjonalne</h1>
+<ul>
+  <li>Użytkownik loguje się do systemu adresem e-mail i hasłem.</li>
+  <li>Pracownik może rozpocząć pracę, rozpocząć i zakończyć przerwę oraz zakończyć pracę.</li>
+  <li>Pracownik nie może rozpocząć nowej pracy, dopóki nie zakończy poprzedniej.</li>
+  <li>Pracownik widzi swój czas pracy z każdego dnia oraz sumę godzin i nadgodzin z całego miesiąca.</li>
+  <li>System sam liczy nadgodziny, czyli czas pracy ponad dzienną normę pracownika.</li>
+  <li>Pracownik może złożyć wniosek o urlop, a kierownik może go zatwierdzić albo odrzucić.</li>
+  <li>Kierownik widzi czas pracy pracowników ze swojego działu.</li>
+  <li>Kierownik może wygenerować raport miesięczny dla swojego działu i pobrać go jako plik CSV.</li>
+  <li>Administrator może dodawać, edytować i blokować konta oraz nadawać role.</li>
+  <li>Administrator może tworzyć działy i przypisywać do nich pracowników.</li>
+  <li>Administrator może poprawić błędny wpis czasu pracy albo dodać brakujący.</li>
+</ul>
+
+<h1>7.&nbsp;&nbsp;Wymagania niefunkcjonalne</h1>
+<ul>
+  <li>Zapisanie rozpoczęcia lub zakończenia pracy trwa krócej niż pół sekundy.</li>
+  <li>Godzinę rozpoczęcia i zakończenia pracy zapisuje serwer, więc pracownik nie może jej zmienić, przestawiając zegar w swoim komputerze.</li>
+  <li>Hasła są zapisywane w bazie danych w postaci zaszyfrowanej.</li>
+  <li>Każdy użytkownik widzi tylko te dane, do których ma uprawnienia. Uprawnienia sprawdza serwer.</li>
+  <li>Strona działa poprawnie na komputerze i na telefonie.</li>
+  <li>Rozpoczęcie i zakończenie pracy wymaga tylko jednego kliknięcia na stronie głównej.</li>
+  <li>Cały system można uruchomić jednym poleceniem przy użyciu Docker Compose.</li>
+</ul>
+</div>
+
+<div class="rys">
+  <h1>8.&nbsp;&nbsp;Diagram klas</h1>
+  <img src="diagrams/class.svg" alt="Diagram klas">
+  <div class="podpis">Rysunek 2. Diagram klas zgodny z implementacją</div>
+<p>Diagram klas przedstawia encje zapisywane w bazie danych. Każda z nich odpowiada jednej klasie w pakiecie <code>pl.psk.czaspracy.model</code> i jednej tabeli w bazie. Względem wstępnego diagramu z kamienia milowego 1 wprowadzono następujące zmiany:</p>
+<ul>
+  <li>metody, które zapisują godzinę (<i>zakoncz</i>, <i>rozpocznijPrzerwe</i>, <i>zakonczPrzerwe</i>), przyjmują czas jako parametr. Czas podaje serwis z zegara serwera, dzięki czemu logikę można łatwo testować,</li>
+  <li>w klasach <i>SesjaPracy</i> i <i>Przerwa</i> doszła metoda <i>czyTrwa()</i>, a w <i>SesjaPracy</i> metody do rozpoczynania i kończenia przerwy,</li>
+  <li>metody <i>zatwierdz</i> i <i>odrzuc</i> przyjmują kierownika, który rozpatruje wniosek,</li>
+  <li>użytkownik może jeszcze nie mieć działu, a dział może jeszcze nie mieć kierownika, dlatego te powiązania mają krotność 0..1.</li>
+</ul>
+</div>
+
+
+<div class="pion">
+  <h1>9.&nbsp;&nbsp;Diagram warstw</h1>
+  <img src="diagrams/layers.svg" alt="Diagram warstw">
+  <div class="podpis">Rysunek 3. Diagram warstw systemu</div>
+<p>System ma trzy warstwy. Warstwa prezentacji to aplikacja React działająca w przeglądarce. Wysyła ona żądania HTTP do serwera i pokazuje wyniki. Warstwa logiki biznesowej to aplikacja Spring Boot. Kontrolery odbierają żądania, serwisy wykonują logikę, na przykład sprawdzają, czy pracownik nie ma już rozpoczętej pracy, a encje liczą czas pracy i nadgodziny. Warstwa dostępu do danych to repozytoria Spring Data JPA, które zapisują i odczytują dane z bazy PostgreSQL. Każda warstwa korzysta tylko z warstwy znajdującej się bezpośrednio pod nią.</p>
+</div>
+
+
+<div class="rys">
+  <h1>10.&nbsp;&nbsp;Diagram komponentów</h1>
+  <img src="diagrams/components.svg" alt="Diagram komponentów">
+  <div class="podpis">Rysunek 4. Diagram komponentów</div>
+<p>Frontend korzysta z interfejsów REST udostępnianych przez komponenty backendu. Komponent <i>Czas pracy</i> udostępnia adres <code>/api/sesje</code> i korzysta z komponentu <i>Model i repozytoria</i>, który łączy się z bazą danych. Komponent <i>Status systemu</i> pozwala sprawdzić, czy serwer działa. Komponenty narysowane linią przerywaną (logowanie, konta i działy, wnioski urlopowe) są w trakcie realizacji i zostaną dodane do kodu w kolejnym etapie.</p>
+</div>
+
+
+<div class="rys duzy">
+  <h1>11.&nbsp;&nbsp;Diagram sekwencji</h1>
+  <img src="diagrams/sequence.svg" alt="Diagram sekwencji">
+  <div class="podpis">Rysunek 5. Diagram sekwencji dla scenariusza „Rozpocznij pracę”</div>
+</div>
+
+<div class="po-rys">
+<p>Diagram sekwencji pokazuje, co dzieje się po kliknięciu przycisku „Rozpocznij pracę”. Frontend wysyła żądanie <code>POST /api/sesje/start</code>. Kontroler ustala, kto wysłał żądanie, i wywołuje serwis. Serwis pobiera użytkownika i sprawdza, czy ma on trwającą sesję. Jeżeli tak, zwraca błąd, który trafia do przeglądarki jako odpowiedź 409 z komunikatem. Jeżeli nie, serwis pobiera bieżący czas z zegara serwera, tworzy nową sesję pracy i zapisuje ją w bazie. Na końcu frontend dostaje dane sesji i pokazuje status „W pracy”.</p>
+</div>
+
+<div class="pion">
+  <h1>12.&nbsp;&nbsp;Diagram aktywności</h1>
+  <img src="diagrams/activity.svg" alt="Diagram aktywności" style="max-height:150mm">
+  <div class="podpis">Rysunek 6. Diagram aktywności dla procesu „Dzień pracy pracownika”</div>
+</div>
+
+<div>
+<p>Diagram aktywności przedstawia cały dzień pracy. Podzielono go na dwa tory: pracownika i systemu. Po kliknięciu „Rozpocznij pracę” system sprawdza, czy pracownik nie ma już trwającej sesji, i zapisuje rozpoczęcie. Następnie pracownik pracuje i może dowolną liczbę razy zrobić przerwę. Po kliknięciu „Zakończ pracę” system kończy ewentualną trwającą przerwę, zapisuje zakończenie i liczy czas pracy oraz nadgodziny.</p>
+
+<h1>13.&nbsp;&nbsp;Stan implementacji</h1>
+<p>Na tym etapie działa szkielet aplikacji oraz rejestracja czasu pracy po stronie serwera. Zrobiono:</p>
+<ul>
+  <li>projekt serwera w Spring Boot i projekt strony w React, połączone przez REST API,</li>
+  <li>encje i repozytoria zgodne z diagramem klas,</li>
+  <li>rozpoczynanie i kończenie pracy oraz przerw, z blokadą drugiej rozpoczętej pracy,</li>
+  <li>podgląd czasu pracy z podziałem na dni i liczenie nadgodzin ponad dzienną normę,</li>
+  <li>czytelne komunikaty błędów zwracane do przeglądarki,</li>
+  <li>14 testów automatycznych (wszystkie przechodzą), które sprawdzają liczenie czasu pracy, przerw i nadgodzin oraz reguły rejestracji.</li>
+</ul>
+<p>Udostępnione adresy REST API:</p>
+<table class="t">
+  <thead><tr><th style="width:42%">Adres</th><th>Działanie</th></tr></thead>
+  <tr><td><code>POST /api/sesje/start</code></td><td>rozpoczęcie pracy (UC02)</td></tr>
+  <tr><td><code>POST /api/sesje/przerwa/start</code></td><td>rozpoczęcie przerwy (UC03)</td></tr>
+  <tr><td><code>POST /api/sesje/przerwa/stop</code></td><td>zakończenie przerwy (UC03)</td></tr>
+  <tr><td><code>POST /api/sesje/stop</code></td><td>zakończenie pracy (UC04)</td></tr>
+  <tr><td><code>GET /api/sesje/status</code></td><td>bieżący stan pracownika: poza pracą, w pracy albo na przerwie</td></tr>
+  <tr><td><code>GET /api/sesje/moje</code></td><td>czas pracy i nadgodziny z wybranego miesiąca (UC05)</td></tr>
+  <tr><td><code>GET /api/status</code></td><td>sprawdzenie, czy serwer działa</td></tr>
+</table>
+<div class="podpis">Tabela 1. Adresy REST API</div>
+<p>W trakcie realizacji są: logowanie przez Spring Security i tokeny JWT, panele pracownika, kierownika i administratora w React oraz zarządzanie kontami i działami. Do czasu dodania logowania serwer rozpoznaje użytkownika po nagłówku <code>X-Uzytkownik-Id</code>. Odpowiada za to jedna klasa <i>AktualnyUzytkownik</i>, więc po dodaniu logowania wystarczy zmienić tylko ją. Wnioski urlopowe i raport CSV zostaną wykonane w kamieniu milowym 3.</p>
+<p>Instrukcja uruchomienia znajduje się w pliku <code>README.md</code> w repozytorium. Serwer można uruchomić bez Dockera poleceniem <code>mvnw spring-boot:run -Dspring-boot.run.profiles=dev</code>, a stronę poleceniem <code>npm run dev</code>.</p>
+
+<h1>14.&nbsp;&nbsp;Repozytorium projektu</h1>
+<p>Kod projektu znajduje się we wspólnym repozytorium Git pod adresem <a href="https://github.com/DudekSzymon/MASI-Projekt">https://github.com/DudekSzymon/MASI-Projekt</a>. Każde zadanie jest wykonywane na osobnej gałęzi i trafia do gałęzi głównej przez pull request. Każdy członek zespołu zapisuje zmiany ze swojego konta. Podział prac w zespole:</p>
+<ul>
+  <li>Szymon Dudek odpowiada za backend, czyli zapisywanie czasu pracy, liczenie nadgodzin i raporty.</li>
+  <li>Bartosz Fijołek odpowiada za frontend, czyli strony pracownika, kierownika i administratora.</li>
+  <li>Bartłomiej Łukasiewicz odpowiada za logowanie, uprawnienia, konta, działy i wnioski urlopowe.</li>
+</ul>
+</div>
+
+</body>
+</html>

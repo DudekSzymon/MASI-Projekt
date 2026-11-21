@@ -42,7 +42,7 @@ public class WniosekUrlopowy {
 
     public WniosekUrlopowy(Uzytkownik pracownik, LocalDate dataOd, LocalDate dataDo) {
         if (dataDo.isBefore(dataOd)) {
-            throw new IllegalArgumentException("Data konca urlopu jest wczesniejsza niz data poczatku");
+            throw new IllegalArgumentException("Data końca urlopu jest wcześniejsza niż data początku.");
         }
         this.pracownik = pracownik;
         this.dataOd = dataOd;
@@ -59,7 +59,7 @@ public class WniosekUrlopowy {
 
     private void rozpatrz(Uzytkownik kierownik, StatusWniosku nowyStatus, String komentarz) {
         if (status != StatusWniosku.OCZEKUJACY) {
-            throw new IllegalStateException("Wniosek zostal juz rozpatrzony");
+            throw new IllegalStateException("Wniosek został już rozpatrzony.");
         }
         this.status = nowyStatus;
         this.rozpatrujacy = kierownik;

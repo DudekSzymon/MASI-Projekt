@@ -48,7 +48,7 @@ public class SesjaPracy {
     /** Konczy sesje. Trwajaca przerwa jest konczona w tym samym momencie. */
     public void zakoncz(LocalDateTime czas) {
         if (!czyTrwa()) {
-            throw new IllegalStateException("Sesja jest juz zakonczona");
+            throw new IllegalStateException("Praca jest już zakończona.");
         }
         przerwy.stream().filter(Przerwa::czyTrwa).forEach(p -> p.zakoncz(czas));
         this.zakonczenie = czas;
@@ -56,10 +56,10 @@ public class SesjaPracy {
 
     public Przerwa rozpocznijPrzerwe(LocalDateTime czas) {
         if (!czyTrwa()) {
-            throw new IllegalStateException("Nie mozna rozpoczac przerwy w zakonczonej sesji");
+            throw new IllegalStateException("Nie można rozpocząć przerwy po zakończeniu pracy.");
         }
         if (przerwy.stream().anyMatch(Przerwa::czyTrwa)) {
-            throw new IllegalStateException("Przerwa juz trwa");
+            throw new IllegalStateException("Przerwa już trwa.");
         }
         Przerwa przerwa = new Przerwa(this, czas);
         przerwy.add(przerwa);
@@ -68,7 +68,7 @@ public class SesjaPracy {
 
     public void zakonczPrzerwe(LocalDateTime czas) {
         Przerwa trwajaca = przerwy.stream().filter(Przerwa::czyTrwa).findFirst()
-                .orElseThrow(() -> new IllegalStateException("Brak trwajacej przerwy"));
+                .orElseThrow(() -> new IllegalStateException("Przerwa nie jest rozpoczęta."));
         trwajaca.zakoncz(czas);
     }
 
